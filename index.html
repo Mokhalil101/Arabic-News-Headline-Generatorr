@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Arabic News Headline Generator powered by Deep Learning">
+  <title>Arabic News Headline Generator</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <!-- HEADER -->
+    <header class="topbar">
+
+      <a class="brand" href="#">
+        <span class="brand-mark">ن</span>
+
+        <span class="brand-copy">
+          <strong data-i18n="brand">مولّد العناوين العربية</strong>
+          <small>DEEP LEARNING PROJECT</small>
+        </span>
+      </a>
+
+      <div class="top-actions">
+
+        <span class="status-pill">
+          <span class="status-dot"></span>
+          <span data-i18n="browser">يعمل داخل المتصفح</span>
+        </span>
+
+        <button class="icon-button" id="languageBtn">
+          EN
+        </button>
+
+        <button class="icon-button" id="themeBtn">
+          ☼
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <main>
+
+      <!-- HERO -->
+      <section class="hero">
+
+        <div class="hero-kicker">
+          <span class="sparkle">✦</span>
+          <span data-i18n="kicker">الذكاء الاصطناعي × الصحافة العربية</span>
+        </div>
+
+        <h1 data-i18n="heroTitle">
+          حوّل المقالات إلى <span>عناوين إخبارية</span>
+        </h1>
+
+        <p data-i18n="heroText">
+          أدخل نص الخبر، واختر نموذج التعلم العميق،
+          واحصل على عنوان عربي موجز يلخص أهم ما ورد في المقال.
+        </p>
+
+      </section>
+
+
+      <!-- WORKSPACE -->
+      <section class="workspace">
+
+        <div class="section-heading">
+
+          <div>
+            <span class="eyebrow" data-i18n="workspaceEyebrow">
+              مساحة العمل
+            </span>
+
+            <h2 data-i18n="workspaceTitle">
+              أنشئ عنوانك الأول
+            </h2>
+          </div>
+
+          <span class="step-label">
+            <span>01</span>
+            <span data-i18n="stepInput">إدخال المقال</span>
+          </span>
+
+        </div>
+
+
+        <div class="workspace-grid">
+
+          <!-- INPUT PANEL -->
+          <section class="panel input-panel">
+
+            <div class="panel-heading">
+
+              <div>
+                <h3 data-i18n="articleLabel">نص المقال</h3>
+
+                <p data-i18n="articleHint">
+                  الصق محتوى الخبر الذي تريد تلخيصه في عنوان.
+                </p>
+              </div>
+
+              <span class="field-icon">▤</span>
+
+            </div>
+
+
+            <textarea
+              id="articleInput"
+              maxlength="12000"
+              placeholder="الصق المقال الإخباري هنا..."
+              data-placeholder-ar="الصق المقال الإخباري هنا..."
+              data-placeholder-en="Paste the news article here..."
+              aria-label="News article"
+            ></textarea>
+
+
+            <div class="input-footer">
+
+              <span id="charCount">0 / 12,000</span>
+
+              <button class="text-button" id="sampleBtn">
+                <span>✦</span>
+                <span data-i18n="sample">جرّب مقالًا تجريبيًا</span>
+              </button>
+
+            </div>
+
+
+            <!-- MODEL SELECT -->
+            <div class="model-select-area">
+
+              <label for="modelSelect" data-i18n="modelLabel">
+                نموذج التوليد
+              </label>
+
+              <div class="select-wrap">
+
+                <select id="modelSelect">
+
+                  <option value="lstm">
+                    LSTM Encoder–Decoder
+                  </option>
+
+                  <option value="rnn">
+                    SimpleRNN Encoder–Decoder
+                  </option>
+
+                  <option value="both">
+                    Compare Both
+                  </option>
+
+                </select>
+
+                <span class="select-chevron">⌄</span>
+
+              </div>
+
+            </div>
+
+
+            <button class="generate-btn" id="generateBtn">
+
+              <span data-i18n="generate">
+                توليد العنوان
+              </span>
+
+              <span class="btn-arrow">←</span>
+
+            </button>
+
+
+            <p class="privacy-note">
+              <span>◈</span>
+
+              <span data-i18n="privacy">
+                سيتم تشغيل النماذج محليًا داخل المتصفح بعد ربط ملفات ONNX.
+              </span>
+            </p>
+
+          </section>
+
+
+          <!-- OUTPUT PANEL -->
+          <section class="panel output-panel">
+
+            <div class="panel-heading">
+
+              <div>
+                <h3 data-i18n="resultLabel">النتيجة</h3>
+
+                <p data-i18n="resultHint">
+                  سيظهر العنوان المُولّد هنا.
+                </p>
+              </div>
+
+              <span class="result-badge">
+                <span class="result-dot"></span>
+                <span data-i18n="waiting">في انتظار المقال</span>
+              </span>
+
+            </div>
+
+
+            <div class="empty-state" id="emptyState">
+
+              <div class="empty-illustration">
+
+                <div class="paper paper-back"></div>
+
+                <div class="paper paper-front">
+                  <span>✦</span>
+                  <i></i>
+                  <i></i>
+                  <i></i>
+                </div>
+
+              </div>
+
+              <strong data-i18n="emptyTitle">
+                عنوانك القادم يبدأ من هنا
+              </strong>
+
+              <p data-i18n="emptyText">
+                أدخل مقالًا في المساحة المقابلة،
+                ثم اضغط على توليد العنوان لبدء التجربة.
+              </p>
+
+            </div>
+
+
+            <div class="results-area hidden" id="resultsArea"></div>
+
+
+            <div class="notice-box" id="modelNotice">
+
+              <span class="notice-icon">ⓘ</span>
+
+              <p data-i18n="modelNotice">
+                الواجهة جاهزة. لم يتم توصيل ملفات ONNX بعد،
+                لذلك لن يتم عرض توقعات تجريبية على أنها نتائج حقيقية.
+              </p>
+
+            </div>
+
+          </section>
+
+        </div>
+
+      </section>
+
+
+      <!-- METRICS -->
+      <section class="metrics-section">
+
+        <div class="section-heading metrics-heading">
+
+          <div>
+            <span class="eyebrow" data-i18n="evaluationEyebrow">
+              تقييم النماذج
+            </span>
+
+            <h2 data-i18n="evaluationTitle">
+              مؤشرات الأداء
+            </h2>
+          </div>
+
+          <span class="live-label">
+            <span class="status-dot"></span>
+            <span data-i18n="fromNotebook">
+              نتائج الاختبار من Notebook
+            </span>
+          </span>
+
+        </div>
+
+
+        <div class="metrics-grid">
+
+          <article class="metric-card">
+            <div class="metric-top">
+              <span>SimpleRNN · Test Loss</span>
+              <span class="metric-symbol">↗</span>
+            </div>
+
+            <strong>5.5877</strong>
+            <small data-i18n="lowerBetter">كلما انخفضت القيمة كان أفضل</small>
+          </article>
+
+
+          <article class="metric-card">
+            <div class="metric-top">
+              <span>LSTM · Test Loss</span>
+              <span class="metric-symbol">↗</span>
+            </div>
+
+            <strong>5.5301</strong>
+            <small data-i18n="lowerBetter">كلما انخفضت القيمة كان أفضل</small>
+          </article>
+
+
+          <article class="metric-card">
+            <div class="metric-top">
+              <span>SimpleRNN · BLEU-1</span>
+              <span class="metric-symbol">◎</span>
+            </div>
+
+            <strong>0.0173</strong>
+            <small data-i18n="higherBetter">كلما ارتفعت القيمة كان أفضل</small>
+          </article>
+
+
+          <article class="metric-card">
+            <div class="metric-top">
+              <span>LSTM · BLEU-1</span>
+              <span class="metric-symbol">◎</span>
+            </div>
+
+            <strong>0.0386</strong>
+            <small data-i18n="higherBetter">كلما ارتفعت القيمة كان أفضل</small>
+          </article>
+
+
+          <article class="metric-card">
+            <div class="metric-top">
+              <span>SimpleRNN · ROUGE-L</span>
+              <span class="metric-symbol">⌁</span>
+            </div>
+
+            <strong>0.0247</strong>
+            <small data-i18n="higherBetter">كلما ارتفعت القيمة كان أفضل</small>
+          </article>
+
+
+          <article class="metric-card">
+            <div class="metric-top">
+              <span>LSTM · ROUGE-L</span>
+              <span class="metric-symbol">⌁</span>
+            </div>
+
+            <strong>0.0389</strong>
+            <small data-i18n="higherBetter">كلما ارتفعت القيمة كان أفضل</small>
+          </article>
+
+        </div>
+
+
+        <p class="metrics-disclaimer" data-i18n="metricsNote">
+          هذه النتائج هي نتائج الـ baseline الحالية على مجموعة الاختبار،
+          وليست ضمانًا لجودة العناوين المولّدة.
+        </p>
+
+      </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+      <span>© 2026 Arabic News Headline Generator</span>
+
+      <span data-i18n="footer">
+        مشروع تعلم عميق · SimpleRNN & LSTM
+      </span>
+
+    </footer>
+
+  </div>
+
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
+<script src="js/model.js"></script>
+<script src="app.js"></script>
+
+
+</body>
+</html>
