@@ -28,39 +28,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup GitHub Pages
+      - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Prepare website files
+      - name: Prepare website
         run: |
           mkdir -p _site
-          cp -r website/. _site/
 
-          if [ -d "models" ]; then
-            cp -r models _site/models
-          elif [ -d "website/models" ]; then
-            cp -r website/models _site/models
-          else
-            echo "ERROR: Models directory not found"
-            exit 1
-          fi
+          cp index.html _site/
+          cp style.css _site/
+          cp app.js _site/
 
-          if [ -d "config" ]; then
-            cp -r config _site/config
-          elif [ -d "website/config" ]; then
-            cp -r website/config _site/config
-          else
-            echo "ERROR: Config directory not found"
-            exit 1
-          fi
+          cp -r js _site/js
+          cp -r models _site/models
+          cp -r config _site/config
 
           touch _site/.nojekyll
 
-      - name: Upload website
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: _site
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
