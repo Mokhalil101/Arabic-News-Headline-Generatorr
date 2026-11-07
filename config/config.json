@@ -1,0 +1,22 @@
+{
+    "vocab_size": 30000,
+    "embedding_dim": 256,
+    "hidden_dim": 256,
+    "max_article_length": 80,
+    "max_title_length": 20,
+    "pad_id": 0,
+    "unk_id": 1,
+    "sos_id": 2,
+    "eos_id": 3,
+    "tokenization": "word-level",
+    "preprocessing": {
+        "remove_html": true,
+        "remove_urls": true,
+        "remove_diacritics": true,
+        "remove_tatweel": true,
+        "normalize_alef": true,
+        "normalize_alef_maqsura": true,
+        "remove_stopwords": false,
+        "stemming": false
+    }
+}
