@@ -11,8 +11,8 @@
   // 1. Configuration
   // =========================================
 
-  const CONFIG_URL = "../config/config.json";
-  const VOCAB_URL = "../config/vocab.json";
+  const CONFIG_URL = "./config/config.json";
+  const VOCAB_URL = "./config/vocab.json";
 
   const MODEL_PATHS = {
     rnn: {
