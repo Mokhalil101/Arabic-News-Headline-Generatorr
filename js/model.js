@@ -15,15 +15,16 @@
   const VOCAB_URL = "./config/vocab.json";
 
   const MODEL_PATHS = {
-    rnn: {
-      encoder: "../models/simple_rnn/encoder.onnx",
-      decoder: "../models/simple_rnn/decoder.onnx"
-    },
-    lstm: {
-      encoder: "../models/lstm/encoder.onnx",
-      decoder: "../models/lstm/decoder.onnx"
-    }
-  };
+  rnn: {
+    encoder: "./models/simple_rnn/encoder.onnx",
+    decoder: "./models/simple_rnn/decoder.onnx"
+  },
+
+  lstm: {
+    encoder: "./models/lstm/encoder.onnx",
+    decoder: "./models/lstm/decoder.onnx"
+  }
+};
 
   let config = null;
   let tokenToId = {};
